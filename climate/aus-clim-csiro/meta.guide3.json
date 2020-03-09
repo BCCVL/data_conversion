@@ -35,8 +35,8 @@
             "layers": [
               {
                 "filename": "b01.tif",
-                "parametername": "bioclim_01",
                 "title": "Bioclim 01: Annual mean temperature",
+                "parametername": "bioclim_01",
                 "tooltip": "The annual mean temperature approximates the total energy inputs for an ecosystem.",
                 "unit": "\u00b0C",
                 "unitfull": "degrees celsius",
@@ -142,8 +142,8 @@
               },
               {
                 "filename": "b02.tif",
-                "parametername": "bioclim_02",
                 "title": "Bioclim 02: Mean Diurnal Range (Mean of monthly (max temp - min temp))",
+                "parametername": "bioclim_02",
                 "tooltip": "This index can help provide information pertaining to the relevance of temperature fluctuation for different species.",
                 "unit": "\u00b0C",
                 "unitfull": "degrees celsius",
@@ -249,8 +249,8 @@
               },
               {
                 "filename": "b03.tif",
-                "parametername": "bioclim_03",
                 "title": "Bioclim 03: Isothermality (BIO2/BIO7) (* 100)",
+                "parametername": "bioclim_03",
                 "tooltip": "Isothermality quantifies how large the day-to-night temperatures oscillate relative to the summer- to-winter (annual) oscillations. An isothermal value of 100 indicates the diurnal temperature range is equiva- lent to the annual temperature range, while anything less than 100 indicates a smaller level of temperature variability within an average month relative to the year. A species distribution may be influenced by larger or smaller temperature fluctuations within a month relative to the year and this predictor is useful for ascertaining such information.",
                 "unit": "proportion",
                 "unitfull": "proportion",
@@ -356,8 +356,8 @@
               },
               {
                 "filename": "b04.tif",
-                "parametername": "bioclim_04",
                 "title": "Bioclim 04: Temperature Seasonality (standard deviation *100)",
+                "parametername": "bioclim_04",
                 "tooltip": "Temperature seasonality is a measure of temperature change over the course of the year. The larger the value, the greater the variability of temperature.",
                 "unit": "proportion",
                 "unitfull": "proportion",
@@ -463,8 +463,8 @@
               },
               {
                 "filename": "b05.tif",
-                "parametername": "bioclim_05",
                 "title": "Bioclim 05: Max Temperature of Warmest Month",
+                "parametername": "bioclim_05",
                 "tooltip": "This information is useful when examining whether species distributions are affected by warm temperature anomalies throughout the year.",
                 "unit": "\u00b0C",
                 "unitfull": "degrees celsius",
@@ -570,8 +570,8 @@
               },
               {
                 "filename": "b06.tif",
-                "parametername": "bioclim_06",
                 "title": "Bioclim 06: Min Temperature of Coldest Month",
+                "parametername": "bioclim_06",
                 "tooltip": "This information is useful when examining whether species distributions are affected by cold temperature anomalies throughout the year.",
                 "unit": "\u00b0C",
                 "unitfull": "degrees celsius",
@@ -1961,7 +1961,7 @@
               },
               {
                 "filename": "b19.tif",
-                "parametername": "bioclim_19",
+               "parametername": "bioclim_19",
                 "title": "Bioclim 19: Precipitation of Coldest Quarter",
                 "tooltip": "This index provides total precipitation during the coldest three months of the year, which can be useful for examining how such environmental factors may affect species seasonal distributions.",
                 "unit": "mm",
