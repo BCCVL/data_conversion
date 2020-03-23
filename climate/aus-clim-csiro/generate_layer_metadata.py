@@ -78,11 +78,6 @@ class MetadataGenerator:
             "type": "Coverage",
             "title": in_dataset["title"],
             "description": in_dataset["description"],
-            "description_full": in_dataset["description_full"],
-            "citation": in_dataset["citation"],
-            "citation-url": in_dataset["citation-url"],
-            "provider": in_dataset["provider"],
-            "landingpage": in_dataset["landingpage"],
             "domain": {
               "type": "Domain",
               "domainType": in_dataset["domain"],
@@ -116,10 +111,16 @@ class MetadataGenerator:
             "ranges": {},
             "rangeAlternates": {},  # inserted by code
             "bccvl:metadata": {
+              "uuid": str(uuid.uuid4()),  # dataset uuid
               "categories": [
                 collection_guide["collection_type"],
                 collection_guide["collection_subtype"]
               ],
+              "description_full": in_dataset["description_full"],
+              "citation": in_dataset["citation"],
+              "citation-url": in_dataset["citation-url"],
+              "provider": in_dataset["provider"],
+              "landingpage": in_dataset["landingpage"],
               "domain": in_dataset["domain"],
               "spatial_domain": "Australia",
               "time_domain": in_dataset["period"],
@@ -139,9 +140,8 @@ class MetadataGenerator:
                 "top": -8.0,
                 "right": 154.0
               },
-              "uuid": str(uuid.uuid4()),
               "partof": [
-                self.collection["collections"][0]["uuid"]
+                self.collection["collections"][self.COL_IDX_IN_GUIDE]["uuid"]
               ]
             }
           }
@@ -156,22 +156,22 @@ class MetadataGenerator:
             base, _ = f["filename"].split(".")
             parametername = f["parametername"]
             parameters[parametername] = {
-              "type": "Parameter",
-              "observedProperty": {
-                "label": {
-                  "en": f["title"]
+                "type": "Parameter",
+                "observedProperty": {
+                    "label": {
+                      "en": f["title"]
+                    },
+                    "dmgr:statistics": f["info"]["stats"],
+                    "dmgr:nodata": f["meta"]["nodata"],
+                    "dmgr:legend": f["unitfull"]
                 },
-                "dmgr:statistics": f["info"]["stats"],
-                "dmgr:nodata": f["meta"]["nodata"],
-                "dmgr:legend": f["unitfull"]
-              },
-              "tooltip": f["tooltip"],
-              "unit": {
-                "symbol": {
-                  "value": f["unit"],
-                  "type": f["unitfull"]
+                "tooltip": f["tooltip"],
+                "unit": {
+                    "symbol": {
+                      "value": f["unit"],
+                      "type": f["unitfull"]
+                    }
                 }
-              }
             }
         return parameters
 
@@ -220,6 +220,8 @@ class MetadataGenerator:
                 new_item["parameters"] = {f: ds["parameters"][f]}  # copies one file item only
                 new_item["rangeAlternates"]["dmgr:tiff"] = {f: ds["rangeAlternates"]["dmgr:tiff"][f]}  # copies one item
                 new_item["bccvl:metadata"]["url"] = ds["rangeAlternates"]["dmgr:tiff"][f]["url"]  # copies url
+                new_item["bccvl:metadata"]["uuid"] = str(uuid.uuid4())  # layer uuid
+                del new_item["bccvl:metadata"]["partof"]
                 self.data.append(new_item)
 
         datafile_path = "{}/data.json".format(self.destination)

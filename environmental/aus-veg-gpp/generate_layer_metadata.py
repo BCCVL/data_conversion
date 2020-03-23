@@ -30,7 +30,7 @@ class MetadataGenerator:
             {
               "_id": "aus-veg-gpp",
               "type": "Collection",
-              "uuid": str(uuid.uuid4()),
+              "uuid": str(uuid.uuid4()),  # collection uuid
               "title": collection_guide["collection_name"],
               "description": collection_guide["collection_description"],
               "categories": [
@@ -79,11 +79,6 @@ class MetadataGenerator:
             "type": "Coverage",
             "title": in_dataset["title"],
             "description": in_dataset["description"],
-            "description_full": in_dataset["description_full"],
-            "citation": in_dataset["citation"],
-            "citation-url": in_dataset["citation-url"],
-            "provider": in_dataset["provider"],
-            "landingpage": in_dataset["landingpage"],
             "domain": {
               "type": "Domain",
               "domainType": in_dataset["domain"],
@@ -117,32 +112,37 @@ class MetadataGenerator:
             "ranges": {},
             "rangeAlternates": {},  # inserted by code
             "bccvl:metadata": {
-              "categories": [
-                collection_guide["collection_type"],
-                collection_guide["collection_subtype"]
-              ],
-              "domain": in_dataset["domain"],
-              "spatial_domain": "Australia",
-              "time_domain": in_dataset["period"],
-              "resolution": in_dataset["resolution"],
-              "acknowledgement": in_dataset["provider"],
-              "external_url": in_dataset["doi"],
-              "license": in_dataset["licence"],
-              "title": in_dataset["title"],
-              "year": in_dataset["published"],
-              "year_range": in_dataset["year_range"],
-              "extent_wgs84": {
-                "bottom": -45.000512,
-                "left": 110.0,
-                "top": -10.0,
-                "right": 155.001329
-              },
-              "uuid": str(uuid.uuid4()),
-              "partof": [
-                self.collection["collections"][0]["uuid"]
-              ]
+                "uuid": str(uuid.uuid4()),  # dataset uuid
+                "categories": [
+                    collection_guide["collection_type"],
+                    collection_guide["collection_subtype"]
+                ],
+                "description_full": in_dataset["description_full"],
+                "citation": in_dataset["citation"],
+                "citation-url": in_dataset["citation-url"],
+                "provider": in_dataset["provider"],
+                "landingpage": in_dataset["landingpage"],
+                "domain": in_dataset["domain"],
+                "spatial_domain": "Australia",
+                "time_domain": in_dataset["period"],
+                "resolution": in_dataset["resolution"],
+                "acknowledgement": in_dataset["provider"],
+                "external_url": in_dataset["doi"],
+                "license": in_dataset["licence"],
+                "title": in_dataset["title"],
+                "year": in_dataset["published"],
+                "year_range": in_dataset["year_range"],
+                "extent_wgs84": {
+                    "bottom": -45.000512,
+                    "left": 110.0,
+                    "top": -10.0,
+                    "right": 155.001329
+                },
+                "partof": [
+                    self.collection["collections"][0]["uuid"]
+                ]
             }
-          }
+        }
         ds["parameters"] = self._collect_parameters(in_dataset)
         ds["rangeAlternates"] = self._collect_alternates(in_dataset)
 
@@ -154,22 +154,22 @@ class MetadataGenerator:
             base, _ = f["filename"].rsplit(".", 1)
             parametername = f["parametername"]
             parameters[parametername] = {
-              "type": "Parameter",
-              "observedProperty": {
-                "label": {
-                  "en": f["title"]
+                "type": "Parameter",
+                "observedProperty": {
+                    "label": {
+                      "en": f["title"]
+                    },
+                    "dmgr:statistics": f["info"]["stats"],
+                    "dmgr:nodata": f["meta"]["nodata"],
+                    "dmgr:legend": f["unitfull"]
                 },
-                "dmgr:statistics": f["info"]["stats"],
-                "dmgr:nodata": f["meta"]["nodata"],
-                "dmgr:legend": f["unitfull"]
-              },
-              "tooltip": f["tooltip"],
-              "unit": {
-                "symbol": {
-                  "value": f["unit"],
-                  "type": f["unitfull"]
+                "tooltip": f["tooltip"],
+                "unit": {
+                    "symbol": {
+                        "value": f["unit"],
+                        "type": f["unitfull"]
+                    }
                 }
-              }
             }
         return parameters
 
@@ -218,6 +218,8 @@ class MetadataGenerator:
                 new_item["parameters"] = {f: ds["parameters"][f]}  # copies one file item only
                 new_item["rangeAlternates"]["dmgr:tiff"] = {f: ds["rangeAlternates"]["dmgr:tiff"][f]}  # copies one item
                 new_item["bccvl:metadata"]["url"] = ds["rangeAlternates"]["dmgr:tiff"][f]["url"]  # copies url
+                new_item["bccvl:metadata"]["uuid"] = str(uuid.uuid4())  # layer uuid
+                del new_item["bccvl:metadata"]["partof"]
                 self.data.append(new_item)
 
         datafile_path = "{}/data.json".format(self.destination)
